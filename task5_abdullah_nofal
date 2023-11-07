@@ -1,0 +1,34 @@
+from PIL import Image 
+from pytesseract import pytesseract
+import enum 
+
+
+class OS(enum.Enum):
+    Mac = 0
+    Windows = 1
+
+
+    class Language(enum.Enum):
+        ENG = 'eng'
+        RUS = 'rus'
+
+        
+class ImageReader :
+    
+
+    def __init__(self, os: OS):
+        if os == OS.Mac:
+            # Tesseract is already installed via Homebrew
+            print('Running on: MAC\n')
+
+
+    def extract_text(self, Image: str, lang: str) -> str:
+        img = Image.open(Image)    
+        extracted_text = pytesseract.image_to_string(img, lang=lang)
+        return extracted_text
+    
+    if __name__ == '__main__':
+        ir = ImageReader( OS.Mac )
+        text = ir.extract_text('images/pale.png.webp', lang='eng')
+        print(text)
+        
